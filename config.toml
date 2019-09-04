@@ -4,6 +4,7 @@ defaultContentLanguage = "en"
 title = "Emily Martinez"
 theme = "hugo-theme-dream"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+enableEmoji = true
 
 # copyright = ""
 
@@ -15,13 +16,13 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
   author = "Emily"
-  motto = "R enthusiast and art plebe"
-  # description = ""
-  # avatar = ""
+  motto = "risueña"
+  description = "R enthusiast and art plebe"
+  avatar = "/img/fall7.png"
   
-  # email = ""
+  # email = "emartinez207@gmail.com"
    github = "https://github.com/em1729"
-  # linkedin = ""
+  # linkedin = "https://www.linkedin.com/in/emartinez3097/"
   # codepen = ""
   # stackoverflow = ""
 
