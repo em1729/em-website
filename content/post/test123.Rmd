@@ -2,8 +2,9 @@
 title: "Hello World"
 author: "Emily Martinez"
 date: '2019-09-03'
-tags: R Markdown, Starwars, test
+tags: [starwars]
 categories: R
+cover: /img/fall6.png
 ---
 
 ##Testing 1, 2, 3
