@@ -1,17 +1,11 @@
 ---
-title: Hello World Dos
-author: Emily Martinez
+title: "Hello World Dos"
+author: "Emily Martinez"
 date: '2019-09-03'
 slug: hello-world-dos
-categories:
-  - R
-tags: []
-lastmod: '2019-09-03T22:04:35-04:00'
-cover: /img/swing.tif
+tags: R Markdown
+categories: R
 ---
 
-Cut out summary from your post content here.
+![](https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif)
 
-<!--more-->
-
-The remaining content of your post.
