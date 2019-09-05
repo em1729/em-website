@@ -17,17 +17,17 @@ enableEmoji = true
 [params]
   author = "Emily"
   motto = "risueña"
-  description = "R enthusiast and art plebe"
+description = "R enthusiast and art plebe"
   avatar = "/img/fall8.png"
   
    email = "emartinez207@gmail.com"
    github = "https://github.com/em1729"
-   linkedin = "https://www.linkedin.com/in/emartinez3097/"
+   linkedin = "emartinez3097"
   # codepen = ""
   # stackoverflow = ""
 
   siteStartYear = 2019
-  aboutHeader = "About"
+  aboutHeader = "About me"
 
   paginate = 4
 
