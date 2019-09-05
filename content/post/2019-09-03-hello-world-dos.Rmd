@@ -2,7 +2,6 @@
 title: "Hello World Dos"
 author: "Emily Martinez"
 date: '2019-09-01'
-slug: ["hello-world-dos"]
 tags: ["R Markdown"]
 categories: ["R"]
 ---
