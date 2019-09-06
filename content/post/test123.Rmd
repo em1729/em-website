@@ -5,8 +5,10 @@ date: '2019-09-02'
 tags: ["starwars"]
 categories: ['R']
 ---
-<!--more-->
-# Testing 1, 2, 3
+
+
+Here a table on starwars.
+
 
 ```{r, echo=FALSE, message=FALSE}
 library(dplyr)
