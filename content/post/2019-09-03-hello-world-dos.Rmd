@@ -5,6 +5,8 @@ date: '2019-09-01'
 tags: ["R Markdown"]
 categories: ["R"]
 ---
+<!--more-->
+Lorem Ipsum
 
 ![](https://media.giphy.com/media/Wj7lNjMNDxSmc/giphy.gif)
 
