@@ -1,0 +1,151 @@
+---
+title: HL7 VXU Immunization Message Builder
+author: Emily Martinez
+date: '2019-12-08'
+slug: hl7-vxu-immunization-message-builder
+categories:
+  - R
+tags:
+  - R Markdown
+toc: no
+images: ~
+---
+
+
+```{r, echo=FALSE}
+library(shiny)
+library(tidyverse)
+library(stringr)
+library(shinyjs)
+
+ui <- shinyUI(fluidPage( useShinyjs(),
+
+  titlePanel("HL7 VXU Message Creator"), h5("This application allows you to enter a value for each VXU segment. The VXU message is created at the bottom of the page automatically. Click the copy button to paste in SOAP or elsewhere."),
+  
+  fluidRow(
+  
+    column(2, 
+              h4("MSH"),
+       
+              wellPanel(textInput("sendingapp",
+                        "Sending application MSH-3.1:", value = "testEMR"),
+              textInput("sendingfac",
+                        "Sending facility code MSH-4.1:", value = "9009X01"),
+              textInput("dtofmsg",
+                        "Date/time of message MSH-7.1:",value=paste(gsub(" ", "", gsub(":", "", gsub("-", "", Sys.time()))), "-",sample(000:9999, 1, replace=F), sep = "")),
+              textInput("msgtype", 
+                        "Message type MSH-9:", value = "VXU^V04^VXU_V04"),
+              textInput("msgctrlID",
+                        "Message Control ID MSH-10:", value = "Test case 1"),
+              textInput("processingID", 
+                        "Processing ID MSH-11", value ="T" ),
+              textInput("version", 
+                        "Version", value = "2.5.1"), style = "background: lightblue")),
+    column(2, 
+                 h4("PID"),
+            wellPanel(textInput("MRN", "Patient MRN", value = sample(1:9999999, 1, replace=F)),
+            textInput("ln", 'Patient Last Name', value = 'TestPt'),
+            textInput('fn', "Patient First Name", value = 'Hedwig'),
+            textInput('momln', "Mother's Maiden Name", value = 'TestMom'),
+            textInput('momfn', "Mother's First Name", value = 'Hagrid'),
+            textInput('dob', "Patient's DOB", value = '19980101'),
+            textInput('sex', "Patient's Admin Sex", value = 'F' ),
+            textInput('raceid', "Patient's Race: ID", value ='1842-4'),
+            textInput('racetxt', "Patient's Race:Text", value = 'Greenland Eskimo'),
+            style = "background: lightgray")),
+    
+    column(2,  h4("PID"),
+           wellPanel(
+           textInput('address', "Patient's Address", value ='42-09 28 ST' ), 
+           textInput('city', "Patient's City", value='Hogwarts'), 
+           textInput('state', "Patient's State", value = 'NY'), 
+           textInput('zip', "Patient's Zip Code", value = '11101'),
+           textInput('phonetype', "Patient's Phone type", value = 'PH'), 
+           textInput('phonenum', "Patient's Phone Number", value = '424^3597993'),
+           style = "background: lightblue"),
+           
+           h4("PD1"),
+           wellPanel(textInput("consent", "Patient Consent", value='N'),
+                     textInput("consent", "Consent Date", value ='20151025' ),
+                     style = "background: lightblue")),
+    column(2,
+           h4("NK1"),
+           wellPanel(textInput("nokln", "Next of kin Last Name", value = 'TestMom'),
+                     textInput("nokfm", "Next of kin First Name", value = 'Hagrid'),
+                     textInput("relation", "Relationship", value = 'MTH'),
+                     style="background:lightgray"),
+           h4("ORC"),
+           wellPanel(textInput("RE", "RE", value = "RE"),
+                     style="background:lightgray")),
+    column(2, 
+           h4("RXA"),
+           wellPanel(textInput("admindate", "Date of administration", value = '20151025'),
+                     style="background:lightblue")),
+    column(2,
+           h4("OBX"),
+           wellPanel(textInput("CE", "CE", value = "CE"),
+                     style="background:lightgray"))
+    
+    ),
+  
+hr(),
+
+fluidRow(
+column(12, align="center",
+actionButton("copy", "Copy VXU Message", align="center"))),
+
+
+  fluidRow(
+    tags$blockquote(htmlOutput("vxu"),
+    tags$head(tags$style("#vxu{font-size: 20px;background-color: darkgray;color: black;
+                                 }"
+      )
+  ))
+  )
+  )
+)
+
+
+
+
+
+server <- function(input, output, session) {
+  
+  output$vxu=renderText({
+    paste0("<p>",'MSH|^~\\', '&amp;', 'amp;|',input$sendingapp, "|", input$sendingfac, "|||", 
+           input$dtofmsg, '||', input$msgtype, "|", input$msgctrlID, "|", input$processingID, "|", 
+           input$version, "|||ER|AL||||||", "</br>", 'PID|||', input$MRN, '^^^^MR||', input$ln, '^', 
+           input$fn, '|', input$momln, '^', input$momfn, '|', input$dob, '|', input$sex, '||', 
+           input$raceid, '^', input$racetxt , '^HL70005|', input$address, "^^", input$city, "^", 
+           input$state, "^", input$zip, '||^PRN^', input$phonetype, '^^^', input$phonenum, '|',
+           "</br>", 'PD1|||||||||||||', input$consent, '|', input$consentdate, "</br>", "NK1||", 
+           input$nokln, "^", input$nokfn, '|', input$relation, "</br>", "ORC|", input$RE, "</br>", 
+           "RXA|||", input$admindate, "</br>", "OBX||", input$CE) })
+    
+   message=
+     renderText({
+       paste0('MSH|^~\\', '&amp;|', input$sendingapp, "|", input$sendingfac, "|||", 
+              input$dtofmsg, '||', input$msgtype, "|", input$msgctrlID, "|", input$processingID, "|", 
+              input$version, "|||ER|AL||||||",  'PID|||', input$MRN, '^^^^MR||', input$ln, '^', 
+              input$fn, '|', input$momln, '^', input$momfn, '|', input$dob, '|', input$sex, '||', 
+              input$raceid, '^', input$racetxt , '^HL70005|', input$address, "^^", input$city, "^", 
+              input$state, "^", input$zip, '||^PRN^', input$phonetype, '^^^', input$phonenum, '|',
+              'PD1|||||||||||||', input$consent, '|', input$consentdate,  "NK1||", 
+              input$nokln, "^", input$nokfn, '|', input$relation, "ORC|", input$RE, 
+              "RXA|||", input$admindate,  "OBX||", input$CE) })
+
+ 
+  
+  
+observeEvent(input$copy, {
+  writeClipboard(paste0(capture.output(message())))
+  shinyjs::alert("VXU message copied")
+})  
+
+  
+
+}
+
+
+shinyApp(ui = ui, server = server)
+```
