@@ -7,12 +7,13 @@ categories:
   - R
 tags:
   - R Markdown
-toc: no
-images: ~
+toc: 
+images: null
+runtime: shiny
 ---
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(shiny)
 library(tidyverse)
 library(stringr)
@@ -148,4 +149,6 @@ observeEvent(input$copy, {
 
 
 shinyApp(ui = ui, server = server)
+
+
 ```
